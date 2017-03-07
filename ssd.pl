@@ -7,16 +7,16 @@ use POSIX qw(strftime);
 use File::Path qw(make_path);
 
 my $disc = "sda1";
-my $dir = $ENV{"HOME"} . "/.scripts/tomsk/ssdlogger/";
+my $dir = $ENV{"HOME"} . "/.scripts/tomsk/ssd-logger/";
 
 make_path($dir);
 
-unless(-e $dir . "info") {  
+unless(-e $dir . "data") {  
     logintofile($dir, $disc);
     return;
 }
  
-open (my $fr, $dir . "info");
+open (my $fr, $dir . "data");
     my $last = <$fr>;
     while (<$fr>) {$last = $_}
 close $fr;
@@ -37,7 +37,7 @@ sub logintofile {
 	$writes = "No SSD";
     }
 
-    open my $fc, ">>", $_[0] . "info";
+    open my $fc, ">>", $_[0] . "data";
         print $fc strftime("%Y%m%d", localtime) . " " . $writes . "\n";
     close $fc;
 
